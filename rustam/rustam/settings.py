@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure--8npp%-4_3s1^h1e&#bkz(z7q)ahr*9ib#0s+xa_7%l^e=(k@+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['price-bot.kz', 'www.price-bot.kz', 'localhost', '195.2.67.244', 'kaspi-teh-domen.ru']
+ALLOWED_HOSTS = ['*']
 
 CORS_ALLOWED_ORIGINS = ['https://kaspi-teh-domen.ru']
 CSRF_TRUSTED_ORIGINS = ['https://kaspi-teh-domen.ru']
@@ -91,18 +91,18 @@ WSGI_APPLICATION = 'rustam.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'pricebot',
-        'USER': 'priceuser',
-        'PASSWORD': 'Q3m5InhPz3E%',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'pricebot',
+    #     'USER': 'priceuser',
+    #     'PASSWORD': 'Q3m5InhPz3E%',
+    #     'HOST': 'localhost',
+    #     'PORT': '',
+    # }
     # pg_dump pricebot > the_backup.sql 
     # psql pricebot < the_backup.sql createdb pricebot
     # } pg_dump -C -h localhost -U priceuser pricebot | psql -h 195.2.67.244 -U priceuser pricebot
