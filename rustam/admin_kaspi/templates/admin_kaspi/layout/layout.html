@@ -1,0 +1,187 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>{% block 'title' %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+    <!-- Bootstrap Css -->
+    <link href="{% static 'assets/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{% static 'assets/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap Css -->
+<link href="{% static 'assets/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+<!-- Icons Css -->
+<link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+<!-- App Css-->
+<link href="{% static 'assets/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" /></head>
+
+    <body data-sidebar="dark">
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <header id="page-topbar">
+    <div class="navbar-header">
+        <div class="d-flex">
+            <!-- LOGO -->
+            <div class="navbar-brand-box">
+                <a href="{% url 'index' %}" class="logo logo-dark">
+                    <span class="logo-sm">
+                        <img src="{% static 'assets/images/logo.svg' %}" alt="" height="22">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="{% static 'assets/images/logo-dark.png' %}" alt="" height="17">
+                    </span>
+                </a>
+
+                <a href="{% url 'index' %}" class="logo logo-light">
+                    <span class="logo-sm">
+                        <img src="{% static 'assets/images/logo-light.svg' %}" alt="" height="22">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="{% static 'assets/images/logo-light.png' %}" alt="" height="19">
+                    </span>
+                </a>
+            </div>
+
+            <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
+                <i class="fa fa-fw fa-bars"></i>
+            </button>
+
+            <div style="display: flex; align-items: center;">
+                <a href="{% url 'account' %}">
+                    <button type="button" class="btn btn-light waves-effect waves-light">
+                        Личный кабинет
+                    </button>
+                </a>
+            </div>
+    </div>
+
+    <div class="d-flex">
+
+        <div class="dropdown d-inline-block d-lg-none ms-2">
+            <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
+                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="mdi mdi-magnify"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                aria-labelledby="page-header-search-dropdown">
+
+                <form class="p-3">
+                    <div class="form-group m-0">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="translation.Search" aria-label="Search input">
+
+                            <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</header>
+<!--  Change-Password example -->
+
+        <!-- ========== Left Sidebar Start ========== -->
+<div class="vertical-menu">
+
+    <div data-simplebar class="h-100">
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+            <!-- Left Menu Start -->
+            <ul class="metismenu list-unstyled" id="side-menu">
+                <li class="menu-title" key="t-menu">Меню</li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bxs-user-detail"></i>
+                        <span key="t-contacts">Пользователи</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{% url 'admin_user_index' %}">Список пользователей</a></li>
+                        <li><a href="{% url 'admin_user_add' %}">Добавить пользователя</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bxs-file-doc"></i>
+                        <span key="t-contacts">Подписки</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{% url 'admin_subscription_index' %}">Список подписок</a></li>
+                        <li><a href="{% url 'admin_subscription_add' %}">Добавить подписку</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="{% url 'admin_settings_index' %}" class="waves-effect">
+                        <i class="bx bx-cog"></i>
+                        <span key="t-chat">Настройки</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'logout' %}" class="waves-effect">
+                        <i class="bx bx-exit"></i>
+                        <span key="t-chat">Выйти</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+        <!-- Sidebar -->
+    </div>
+</div>
+<!-- Left Sidebar End -->
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            {% block 'content' %}{% endblock %}
+
+            <!-- End Page-content -->
+            <footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                {{settings.copyright}}
+            </div>
+        </div>
+    </div>
+</footer>        </div>
+        <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->
+
+    <!-- Right Sidebar -->
+    <!-- Right Sidebar -->
+
+
+<!-- Right bar overlay-->
+<div class="rightbar-overlay"></div>    <!-- /Right-bar -->
+
+    <!-- JAVASCRIPT -->
+    <!-- JAVASCRIPT -->
+<script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'assets/libs/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/libs/metismenu/metisMenu.min.js' %}"></script>
+<script src="{% static 'assets/libs/simplebar/simplebar.min.js' %}"></script>
+<script src="{% static 'assets/libs/node-waves/waves.min.js' %}"></script>
+
+
+<!-- App js -->
+<script src="{% static 'assets/js/app.js' %}"></script>
+
+</body>
+
+</html>

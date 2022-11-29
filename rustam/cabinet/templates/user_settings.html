@@ -1,0 +1,101 @@
+{% extends 'layout/layout.html' %}
+{% block 'content' %}
+            <div class="page-content">
+                <div class="container-fluid">
+                    
+    <!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0 font-size-18">Настройки профиля</h4>
+        </div>
+    </div>
+</div>
+<!-- end page title -->    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Настройки профиля</h4>
+                    <form action="{% url 'user_settings' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="row mb-4">
+                            <label for="username" class="col-form-label col-lg-2">Username</label>
+                            <div class="col-lg-10">
+                                <input id="username" name="username" type="text" class="form-control" value="{{user.username}}"
+                                    placeholder="Username.." required="">
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="email" class="col-form-label col-lg-2">Email</label>
+                            <div class="col-lg-10">
+                                <input id="email" name="email" type="text" class="form-control" value="{{user.email}}"
+                                    placeholder="Email..." required="">
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="password" class="col-form-label col-lg-2">Пароль</label>
+                            <div class="col-lg-10">
+                                <input id="password" name="password" type="password" class="form-control"
+                                    placeholder="Пароль...">
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="telegram_id" class="col-form-label col-lg-2">Telegram ID</label>
+                            <div class="col-lg-10">
+                                <input id="telegram_id" name="telegram_id" type="text" class="form-control" value="{{user.telegram_id}}"
+                                    placeholder="Telegram ID...">
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="kaspi_login" class="col-form-label col-lg-2">Kaspi Логин</label>
+                            <div class="col-lg-10">
+                                <input id="kaspi_login" name="kaspi_login" type="text" class="form-control" value="{{user.kaspi_login}}"
+                                    placeholder="Kaspi Логин...">
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="kaspi_password" class="col-form-label col-lg-2">Kaspi Пароль</label>
+                            <div class="col-lg-10">
+                                <input id="kaspi_password" name="kaspi_password" type="text" class="form-control" value="{{user.kaspi_password}}"
+                                    placeholder="Kaspi Пароль...">
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="kaspi_company" class="col-form-label col-lg-2">Название компании (В Kaspi)</label>
+                            <div class="col-lg-10">
+                                <input id="kaspi_company" name="kaspi_company" type="text" class="form-control" value="{{user.kaspi_company}}"
+                                    placeholder="Kaspi Компания...">
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="kaspi_merchant_id" class="col-form-label col-lg-2">ID магазина (В Kaspi)</label>
+                            <div class="col-lg-10">
+                                <input id="kaspi_merchant_id" name="kaspi_merchant_id" type="text" class="form-control" value="{{user.kaspi_merchant_id}}"
+                                    placeholder="Kaspi ID...">
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="skip_merchant_id" class="col-form-label col-lg-2">Пропуск ID магазинов (указывать через ; Пример: ID1;ID2;ID3)</label>
+                            <div class="col-lg-10">
+                                <input id="skip_merchant_id" name="skip_merchant_id" type="text" class="form-control" value="{{user.skip_merchant_id}}"
+                                    placeholder="Пропуск ID...">
+                            </div>
+                        </div>
+                    
+                    <div class="row justify-content-end">
+                        <div class="col-lg-10">
+                            <button type="submit" class="btn btn-primary">Изменить</button>
+                        </div>
+                    </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+{% endblock %}

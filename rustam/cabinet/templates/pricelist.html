@@ -1,0 +1,214 @@
+{% extends 'layout/layout.html' %}
+{% block 'content' %}
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0 font-size-18">Прайслист</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            {% if user.check_active %}
+            <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <h4 class="card-title">Таблица</h4>
+                                <div>
+                                    {% if user.pricelist %}<a class="btn btn-success waves-effect waves-light" id="saveBtn" role="button">Сохранить</a>{% endif %}
+                                    {% if user.pricelist %}<a class="btn btn-primary waves-effect waves-light" href="{{user.pricelist.url}}" role="button" download>Скачать</a>{% endif %}
+                                    <a class="btn btn-warning waves-effect waves-light" href="{% url 'pricelist_update' %}" role="button">Загрузить</a>
+                                </div>
+                            </div>
+
+                            <form action="{% url 'pricelist_save' %}" method="POST" id="tableSaveForm">
+                                {% csrf_token %}
+                                <input type="hidden" name="table" id="table">
+                            </form>
+
+                            <form class="app-search d-none d-lg-block" style="display: flex !important; flex-direction: row;" action="" method="GET">
+                                <div class="position-relative" style="width: 100%;">
+                                    <input type="text" name="search" class="form-control" placeholder="Поиск..." value="{{search}}">
+                                    <span class="bx bx-search-alt"></span>
+                                </div>
+                                <a class="btn btn-primary waves-effect waves-light" href="{% url 'pricelist' %}" role="button" style="margin-left: 20px; width: 90px;">Сбросить</a>
+                            </form>
+
+                            {% if data %}
+                            <div class="table-responsive" id="pricelistTable">
+                                <table class="table table-editable table-nowrap align-middle table-edits">
+                                    <thead>
+                                        <tr>
+                                            {% for title in data.titles %}
+                                            <th>{{title}}</th>
+                                            {% endfor %}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in data.rows %}
+                                        <tr>
+                                            {% for col in row %}
+                                            {% if col == 'yes' or col == 'no' %}
+                                            <td><a class="btn btn-primary waves-effect waves-light changeValue" href="#">{{col}}</a></td>
+                                            {% else %}
+                                            <td>{{col}}</td>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% include 'admin_kaspi/layout/pagination.html' %}
+                            {% else %}
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-8 col-lg-6 col-xl-5">
+                                        <div class="card overflow-hidden">
+                                            <div class="bg-primary bg-soft">
+                                                <div class="row">
+                                                    <div class="col-7">
+                                                        <div class="text-primary p-4">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-5 align-self-end">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body pt-0">
+                                                <div class="p-2" style="display: flex; align-items: center; flex-direction: column;">
+                                                    <div class="mt-3 d-grid" style="text-align: center;">
+                                                        Ваш прайслист ещё не загружен, или же формат прайслиста неверный. Пожалуйста, загрузите файл EXCEL таблиц, чтобы просматривать свой прайслист.
+                                                    </div>
+                                                    <a href="{% url 'pricelist_update' %}">Загрузить</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+            {% else %}
+            <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 class="card-title">Подписки</h4>
+
+                            <div class="table-responsive">
+                                <table class="table table-editable table-nowrap align-middle table-edits">
+                                    <thead>
+                                        <tr>
+                                            <th>Название</th>
+                                            <th>Период</th>
+                                            <th>Цена</th>
+                                            <th>Оплатить</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for subscription in subscriptions %}
+                                        <tr data-id="{{subscription.id}}">
+                                            <td data-field="title">{{subscription.title}}</td>
+                                            <td data-field="period">{{subscription.period}} дней</td>
+                                            <td data-field="price">{{subscription.price}}₸</td>
+                                            {% if subscription.free %}
+                                            <td style="width: 100px">
+                                                <a class="btn btn-outline-secondary btn-sm edit download" href="{% url 'pay' id=subscription.id %}">
+                                                    <!-- href="{% url 'pay' id=subscription.id %}" -->
+                                                    <i class="fas fa-money-bill"></i>
+                                                </a>
+                                            </td>
+                                            {% else %}
+                                            <td style="width: 100px">
+                                                <a class="btn btn-outline-secondary btn-sm edit download" onclick="payHandler('{{subscription.price}}');">
+                                                    <!-- href="{% url 'pay' id=subscription.id %}" -->
+                                                    <i class="fas fa-money-bill"></i>
+                                                </a>
+                                            </td>
+                                            {% endif %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+            {% endif %}
+        </div> <!-- container-fluid -->
+    </div>
+    <script>
+        $('.changeValue').click(function () {
+            if($(this).html().includes('no')) {
+                $(this).html('yes');
+            } else if($(this).html().includes('yes')) {
+                $(this).html('no');
+            }
+        });
+        $('#saveBtn').click(function () {
+            var html = $('#pricelistTable').html();
+            $('#table').val(html);
+            console.log(html);
+            $('#tableSaveForm').submit();
+        });
+    </script>
+
+    {% for message in messages %}
+    <script type="text/javascript">
+        alert("{{message}}");
+    </script>
+    {% endfor %}
+
+    {% if not user.check_active %}
+    <script src="https://widget.cloudpayments.kz/bundles/cloudpayments"></script>
+    <script>
+        function payHandler (amount) {
+            amount = parseInt(amount);
+            var widget = new cp.CloudPayments();
+            widget.charge({ // options
+                // publicId: 'pk_95dd14fb3ac81547e42e492eaf113',
+                // publicId: 'pk_039825aac3acac5af69282ff994b4',
+                description: 'Оплатить справку',
+                amount: amount, // сумма
+                currency: 'KZT',
+                invoiceId: '', //номер заказа
+                accountId: '{{user.email}}', //плательщик
+            },
+            function (options){ // success
+                //действие при успешном платеже
+                $.ajax({
+                    method: 'post',
+                    data: {
+                        '_token':'{{csrf_token}}',
+                        'amount': amount
+                    },
+                    url: '{% url "index" %}',
+                    success: function(){
+                    $('.alert-success').fadeIn();
+                        setTimeout(function(){
+                            // $('.alert-success').fadeOut();
+                            window.location.href = '{% url "pricelist" %}';
+                        },1500);
+                    }
+                });
+            },
+            function (reason, options) { // fail
+                //действие при неуспешном платеже
+            });
+        };
+    </script>
+    {% endif %}
+{% endblock %}

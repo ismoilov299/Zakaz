@@ -1,0 +1,63 @@
+{% extends 'admin_kaspi/layout/layout.html' %}
+{% block 'content' %}
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0 font-size-18">Подписки</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 class="card-title">Подписки</h4>
+
+                            <div class="table-responsive">
+                                <table class="table table-editable table-nowrap align-middle table-edits">
+                                    <thead>
+                                        <tr>
+                                            <th>Название</th>
+                                            <th>Период</th>
+                                            <th>Цена</th>
+                                            <th>Изменить</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for sub in subs %}
+                                        <tr data-id="{{sub.id}}">
+                                            <td data-field="title">{{sub.title}}</td>
+                                            <td data-field="period">{{sub.period}}</td>
+                                            <td data-field="price">{{sub.price}}</td>
+                                            <td style="width: 100px">
+                                                <a class="btn btn-outline-secondary btn-sm edit" href="{% url 'admin_subscription_edit' id=sub.id %}" title="Edit">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    </table>
+                            </div>
+
+                            {% with subs as page %}
+                            {% include 'admin_kaspi/layout/pagination.html' %}
+                            {% endwith %}
+
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+
+        </div> <!-- container-fluid -->
+    </div>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'layout/layout.html' %}
+{% load static %}
+{% block 'content' %}
+            <div class="page-content">
+                <div class="container-fluid">
+                    
+    <!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0 font-size-18">Загрузить прайслист</h4>
+        </div>
+    </div>
+</div>
+<h5>
+    <span style="color: red;">Важно!</span> Файл должен соответствовать шаблону, чтобы не было лишних ненужных столбцов и т.д. <a href="{% static 'template.xlsx' %}" download="">Скачать шаблон</a>
+</h5>
+<!-- end page title -->    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row mb-4">
+                            <label for="pricelist" class="col-form-label col-lg-2">Прайслист</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="file" name="pricelist" id="pricelist" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                            </div>
+                        </div>
+                    
+                    <div class="row justify-content-end">
+                        <div class="col-lg-10">
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                            <a class="btn btn-info waves-effect waves-light" onclick="history.back();" role="button">Назад</a>
+                        </div>
+                    </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+{% endblock %}

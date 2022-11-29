@@ -1,0 +1,86 @@
+{% extends 'admin_kaspi/layout/layout.html' %}
+{% block 'content' %}
+            <div class="page-content">
+                <div class="container-fluid">
+                    
+    <!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0 font-size-18">Изменить пользователя</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Пользователи</a></li>
+                                            <li class="breadcrumb-item active">Изменить пользователя</li>
+                                    </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Изменить пользователя</h4>
+                    <form action="{% url 'admin_user_update' id=user.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="row mb-4">
+                            <label for="name" class="col-form-label col-lg-2">Username</label>
+                            <div class="col-lg-10">
+                                <input id="username" name="username" type="text" class="form-control" value="{{user.username}}"
+                                    placeholder="Username...">
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="email" class="col-form-label col-lg-2">Email</label>
+                            <div class="col-lg-10">
+                                <input id="email" name="email" type="email" class="form-control" value="{{user.email}}"
+                                    placeholder="Email...">
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="role" class="col-form-label col-lg-2">Роль</label>
+                            <div class="col-md-10">
+                                <select class="form-select" name='role' id='role'>
+                                    <option value="" {% if not user.is_superuser %}selected{% endif %}>Пользователь</option>
+                                    <option value="admin" {% if user.is_superuser %}selected{% endif %}>Админ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="active" class="col-form-label col-lg-2">Активен</label>
+                            <div class="col-md-10">
+                                <select class="form-select" name='active' id='active'>
+                                    <option value="False" {% if not user.active %}selected{% endif %}>Неактивен</option>
+                                    <option value="True" {% if user.active %}selected{% endif %}>Активен</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="active_date" class="col-md-2 col-form-label">Дата окончания</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="date" name="active_date" value="{{user.get_format_active_date}}" id="active_date">
+                            </div>
+                        </div>
+                    
+                    <div class="row justify-content-end">
+                        <div class="col-lg-10">
+                            <button type="submit" class="btn btn-primary">Изменить</button>
+                            <a class="btn btn-danger waves-effect waves-light" href="{% url 'admin_user_delete' id=user.id %}" role="button">Удалить</a>
+                            <a class="btn btn-info waves-effect waves-light" href="{% url 'admin_user_index' %}" role="button">Назад</a>
+                        </div>
+                    </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+{% endblock %}

@@ -1,0 +1,286 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+    <head>
+        
+        <meta charset="utf-8" />
+        <title>Главная</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Бот для автоснижения цен" name="description" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- Bootstrap Css -->
+        <link href="{% static 'assets/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{% static 'assets/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <body>
+        <center style="margin-top: 50px;">
+            <h1>Каспи бот для продавцов - автоматически снижает цены</h1>
+            <h4>Будьте всегда на первом месте и зарабатывайте в 2-3 раза больше вместе с Kaspi Bot</h4>
+            <p>
+                Контакты:<br>
+                Whatsapp / Звонки +77009780649 Менеджер<br>
+                e-mail:  tech@price-bot.kz
+            </p>
+        </center>
+        
+        {% if not user.is_authenticated %}
+        <div class="account-pages my-5 pt-sm-5" id="login_form">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card overflow-hidden">
+                            <div class="bg-primary bg-soft">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <div class="text-primary p-4">
+                                            <h5 class="text-primary">Вход</h5>
+                                            <p>Войдите в свой аккаунт.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-5 align-self-end">
+                                        <img src="{% static 'assets/images/profile-img.png' %}" alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="p-2">
+                                    <form class="form-horizontal" action="{% url 'login' %}" method="POST">
+                                        {% csrf_token %}
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                        </div>
+                
+                                        <div class="mb-3">
+                                            <label class="form-label">Пароль</label>
+                                            <div class="input-group auth-pass-inputgroup">
+                                                <input type="password" class="form-control" placeholder="Пароль" aria-label="Пароль" name="password" aria-describedby="password-addon">
+                                                <button class="btn btn-light " type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mt-3 d-grid">
+                                            <button class="btn btn-primary waves-effect waves-light" type="submit">Войти</button>
+                                        </div>
+                                    </form>
+                                </div>
+            
+                            </div>
+                        </div>
+                        <div class="mt-5 text-center">
+                            
+                            <div>
+                                <p>Ещё нет аккаунта ? <a href="#" class="fw-medium text-primary" id="sign_in_btn"> Зарегистрируйтесь </a> </p>
+                                <p>{{settings.copyright}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end account-pages -->
+
+        <div class="account-pages my-5 pt-sm-5" id="sign_in_form" style="display: none;">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card overflow-hidden">
+                            <div class="bg-primary bg-soft">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <div class="text-primary p-4">
+                                            <h5 class="text-primary">Регистрация</h5>
+                                            <p>Зарегистрируйтесь на сайте.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-5 align-self-end">
+                                        <img src="{% static 'assets/images/profile-img.png' %}" alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="p-2">
+                                    <form class="needs-validation" novalidate action="{% url 'sign_up' %}" method="POST">
+                                        {% csrf_token %}
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>  
+                                            <div class="invalid-feedback">
+                                                Пожалуйста, введите Email
+                                            </div>      
+                                        </div>
+                
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Username</label>
+                                            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                                            <div class="invalid-feedback">
+                                                Пожалуйста, введите Username
+                                            </div>  
+                                        </div>
+                
+                                        <div class="mb-3">
+                                            <label for="password" class="form-label">Пароль</label>
+                                            <input type="password" class="form-control" id="password" name="password" placeholder="Пароль" required>
+                                            <div class="invalid-feedback">
+                                                Пожалуйста, введите Пароль
+                                            </div>       
+                                        </div>
+                    
+                                        <div class="mt-4 d-grid">
+                                            <button class="btn btn-primary waves-effect waves-light" type="submit">Зарегистрироваться</button>
+                                        </div>
+                                    </form>
+                                </div>
+            
+                            </div>
+                        </div>
+                        <div class="mt-5 text-center">
+                            
+                            <div>
+                                <p>Уже есть аккаунт ? <a href="#" class="fw-medium text-primary" id="login_btn"> Войти</a> </p>
+                                <p>{{settings.copyright}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="account-pages my-5 pt-sm-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card overflow-hidden">
+                            <div class="bg-primary bg-soft">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <div class="text-primary p-4">
+                                            <h5 class="text-primary">Авторизованы</h5>
+                                            <p>Вы уже авторизовались на сайте.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-5 align-self-end">
+                                        <img src="{% static 'assets/images/profile-img.png' %}" alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="p-2">                                    
+                                    <div class="mt-3 d-grid">
+                                        <a href="{% url 'account' %}" style="width: 100% !important;"><button style="width: 100% !important;" class="btn btn-primary waves-effect waves-light" type="submit">Личный кабинет</button></a>
+                                        <div style="height: 10px;"></div>
+                                        <a href="{% url 'logout' %}" style="width: 100% !important;"><button  style="width: 100% !important;"class="btn btn-light waves-effect waves-light" type="submit">Выйти</button></a>
+                                    </div>
+                                </div>
+            
+                            </div>
+                        </div>
+                        <div class="mt-5 text-center">
+                            <div>
+                                <p>{{settings.copyright}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <section class="elementor-section elementor-top-section elementor-element elementor-element-a8c1219 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="a8c1219" data-element_type="section" style="display: flex; align-items: center; flex-direction: row;">
+            <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-5fe3ea8" data-id="5fe3ea8" data-element_type="column" style="width: 33%;">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                    <div class="elementor-element elementor-element-180210f elementor-widget__width-auto elementor-widget elementor-widget-image" data-id="180210f" data-element_type="widget" data-widget_type="image.default">
+                        <div class="elementor-widget-container">
+                            <style>/*! elementor - v3.7.2 - 21-08-2022 */
+                                .elementor-widget-image{text-align:center}.elementor-widget-image a{display:inline-block}.elementor-widget-image a img[src$=".svg"]{width:48px}.elementor-widget-image img{vertical-align:middle;display:inline-block}
+                            </style>
+                            <figure class="wp-caption">
+                                <img style="width: 50%;" src="https://kaspi-bots.kz/wp-content/uploads/2022/08/price-kaspi-bot-1024x478.png" class="attachment-large size-large" alt="Схема работа каспи бота снижение цен" loading="lazy" srcset="https://kaspi-bots.kz/wp-content/uploads/2022/08/price-kaspi-bot-1024x478.png 1024w, https://kaspi-bots.kz/wp-content/uploads/2022/08/price-kaspi-bot-300x140.png 300w, https://kaspi-bots.kz/wp-content/uploads/2022/08/price-kaspi-bot-768x358.png 768w, https://kaspi-bots.kz/wp-content/uploads/2022/08/price-kaspi-bot.png 1138w" sizes="(max-width: 1024px) 100vw, 1024px">                                          
+                                <figcaption class="widget-image-caption wp-caption-text">1. Подготовьте прайс лист</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-5bb2595" data-id="5bb2595" data-element_type="column" style="width: 33%;">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                    <div class="elementor-element elementor-element-e20decc elementor-widget elementor-widget-image" data-id="e20decc" data-element_type="widget" data-widget_type="image.default">
+                        <div class="elementor-widget-container">
+                            <figure class="wp-caption">
+                                <img style="width: 50%;" src="https://kaspi-bots.kz/wp-content/uploads/2022/08/photo_2022-08-19_01-47-33.jpg" class="attachment-large size-large" alt="Загрузите прайс каспи" loading="lazy" srcset="https://kaspi-bots.kz/wp-content/uploads/2022/08/photo_2022-08-19_01-47-33.jpg 828w, https://kaspi-bots.kz/wp-content/uploads/2022/08/photo_2022-08-19_01-47-33-276x300.jpg 276w, https://kaspi-bots.kz/wp-content/uploads/2022/08/photo_2022-08-19_01-47-33-768x835.jpg 768w" sizes="(max-width: 828px) 100vw, 828px">                                           
+                                <figcaption class="widget-image-caption wp-caption-text">2. Загрузите прайс в Kaspi Bot  - бот в ответ пришлет готовый прайс через 7-15 мин.</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-399d727" data-id="399d727" data-element_type="column" style="width: 33%;">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                    <div class="elementor-element elementor-element-7e8af03 elementor-widget elementor-widget-image" data-id="7e8af03" data-element_type="widget" data-widget_type="image.default">
+                        <div class="elementor-widget-container">
+                            <figure class="wp-caption">
+                                <img style="width: 50%;" src="https://kaspi-bots.kz/wp-content/uploads/2022/08/kaspi-bot-снижение-цены-первое-место-1024x802.png" class="attachment-large size-large" alt="" loading="lazy" srcset="https://kaspi-bots.kz/wp-content/uploads/2022/08/kaspi-bot-снижение-цены-первое-место-1024x802.png 1024w, https://kaspi-bots.kz/wp-content/uploads/2022/08/kaspi-bot-снижение-цены-первое-место-300x235.png 300w, https://kaspi-bots.kz/wp-content/uploads/2022/08/kaspi-bot-снижение-цены-первое-место-768x602.png 768w, https://kaspi-bots.kz/wp-content/uploads/2022/08/kaspi-bot-снижение-цены-первое-место.png 1144w" sizes="(max-width: 1024px) 100vw, 1024px">                                         
+                                <figcaption class="widget-image-caption wp-caption-text">3. Загрузите новый прайс и зарабатывайте больше с Каспи Бот!</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <center>
+            <h2>ОПИСАНИЕ СЕРВИСА</h2>
+            <p>
+                Price-bot это сервис который помогает вам быстро изменять цены и делать их ниже конкурентов в магазине на Kaspi.kz<br><br>
+
+                Вам нужно загрузить прайс в телеграм бот, в ответ через 5-10 минут вы получите готовый прайс где цены будут снижены на -2 тг от цены конкурента.<br><br>
+
+                * можно поставить минимальную цену и бот не будет спускать цену ниже этой цены<br>
+                * бот уже проверен и работает более 6 месяцев в тестовом режиме<br>
+                * бесплатная версия на 3 дня<br>
+                * есть возможность менять цены без авторизации на Kaspi, для тех кому не нужно менять цены каждые 30 минут
+            </p>
+        </center>
+
+        <div class="mt-5 text-center" style="margin-bottom: 20px;">
+            <div>
+                <a href="{% static 'confidency.docx' %}" style="margin-right: 20px;">Политика конфиденциальности</a>
+                <a href="{% static 'offert.docx' %}" style="margin-right: 20px;">Оферта</a>
+                <a href="{% static 'onlinepay.docx' %}">Онлайн оплата</a>
+            </div>
+        </div>
+
+        <!-- JAVASCRIPT -->
+        <script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'assets/libs/metismenu/metisMenu.min.js' %}"></script>
+        <script src="{% static 'assets/libs/simplebar/simplebar.min.js' %}"></script>
+        <script src="{% static 'assets/libs/node-waves/waves.min.js' %}"></script>
+        
+        <!-- App js -->
+        <script src="{% static 'assets/js/app.js' %}"></script>
+
+        <script type="text/javascript">
+            $('#login_btn').click(function() {
+                $('#sign_in_form').hide();
+                $('#login_form').show();
+            });
+
+            $('#sign_in_btn').click(function() {
+                $('#sign_in_form').show();
+                $('#login_form').hide();
+            });
+        </script>
+    </body>
+</html>

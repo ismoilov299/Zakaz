@@ -1,0 +1,68 @@
+{% extends 'admin_kaspi/layout/layout.html' %}
+{% block 'content' %}
+            <div class="page-content">
+                <div class="container-fluid">
+                    
+    <!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0 font-size-18">Создать подписку</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Подписки</a></li>
+                                            <li class="breadcrumb-item active">Создать подписку</li>
+                                    </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Создать подписку</h4>
+                    <form action="{% url 'admin_subscription_create' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="row mb-4">
+                            <label for="title" class="col-form-label col-lg-2">Название</label>
+                            <div class="col-lg-10">
+                                <input id="title" name="title" type="text" class="form-control"
+                                    placeholder="Название...">
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="period" class="col-form-label col-lg-2">Период (месяц)</label>
+                            <div class="col-lg-10">
+                                <input id="period" name="period" type="number" class="form-control"
+                                    placeholder="Период...">
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="price" class="col-form-label col-lg-2">Цена</label>
+                            <div class="col-lg-10">
+                                <input id="price" name="price" type="number" class="form-control"
+                                    placeholder="Цена...">
+                            </div>
+                        </div>
+                    
+                    <div class="row justify-content-end">
+                        <div class="col-lg-10">
+                            <button type="submit" class="btn btn-primary">Создать</button>
+                        </div>
+                    </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+{% endblock %}
